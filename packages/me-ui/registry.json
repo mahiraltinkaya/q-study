@@ -1,0 +1,242 @@
+{
+  "name": "me-ui",
+  "baseTokens": [
+    "--background",
+    "--foreground",
+    "--muted",
+    "--muted-foreground",
+    "--primary",
+    "--primary-foreground",
+    "--secondary",
+    "--secondary-foreground",
+    "--border",
+    "--input",
+    "--ring",
+    "--destructive",
+    "--radius"
+  ],
+  "items": [
+    {
+      "name": "utils",
+      "title": "cn",
+      "description": "Class name merger — clsx piped through tailwind-merge.",
+      "dependencies": ["clsx", "tailwind-merge"],
+      "files": [
+        {
+          "source": "src/lib/utils.ts",
+          "path": "lib/utils.ts"
+        }
+      ]
+    },
+    {
+      "name": "brand-theme",
+      "title": "Brand Theme",
+      "description": "The --brand token the fields paint their focus, error and accent states with.",
+      "cssVars": {
+        "theme": {
+          "--color-brand": "var(--brand)"
+        },
+        "light": {
+          "--brand": "#870052"
+        }
+      }
+    },
+    {
+      "name": "field-hint",
+      "title": "Field Hint",
+      "description": "Explanatory panel anchored to a field's trailing info mark. Built on Tooltip so it never steals focus from the field that opened it.",
+      "dependencies": ["@base-ui/react", "lucide-react"],
+      "cssVars": {
+        "theme": {
+          "--color-ink": "var(--ink)"
+        },
+        "light": {
+          "--ink": "#0b1324"
+        }
+      },
+      "registryDependencies": ["utils", "brand-theme"],
+      "files": [
+        {
+          "source": "src/components/ui/field-hint.tsx",
+          "path": "components/ui/field-hint.tsx"
+        }
+      ]
+    },
+    {
+      "name": "input",
+      "title": "Input",
+      "description": "Text field with an optional leading icon and a focus-driven hint panel.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["utils", "field-hint"],
+      "files": [
+        {
+          "source": "src/components/ui/input.tsx",
+          "path": "components/ui/input.tsx"
+        }
+      ]
+    },
+    {
+      "name": "select",
+      "title": "Select",
+      "description": "Single-choice dropdown over a string list, with the same icon and hint affordances as Input.",
+      "dependencies": ["@base-ui/react", "lucide-react"],
+      "registryDependencies": ["utils", "field-hint"],
+      "files": [
+        {
+          "source": "src/components/ui/select.tsx",
+          "path": "components/ui/select.tsx"
+        }
+      ]
+    },
+    {
+      "name": "button",
+      "title": "Button",
+      "description": "Button with variant, size and shape sets built on class-variance-authority.",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": ["utils", "brand-theme"],
+      "cssVars": {
+        "theme": {
+          "--color-cta": "var(--cta)",
+          "--color-cta-hover": "var(--cta-hover)"
+        },
+        "light": {
+          "--cta": "#111c3a",
+          "--cta-hover": "#1c2b52"
+        }
+      },
+      "files": [
+        {
+          "source": "src/components/ui/button.tsx",
+          "path": "components/ui/button.tsx"
+        }
+      ]
+    },
+    {
+      "name": "tooltip",
+      "title": "Tooltip",
+      "description": "Tooltip primitives — provider, root, trigger and content.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["utils"],
+      "files": [
+        {
+          "source": "src/components/ui/tooltip.tsx",
+          "path": "components/ui/tooltip.tsx"
+        }
+      ]
+    },
+    {
+      "name": "stepper",
+      "title": "Stepper",
+      "description": "Progress rail for multi-step flows: a mobile progress bar plus a clickable desktop rail.",
+      "registryDependencies": ["utils", "brand-theme"],
+      "files": [
+        {
+          "source": "src/components/ui/stepper/index.tsx",
+          "path": "components/ui/stepper/index.tsx"
+        },
+        {
+          "source": "src/components/ui/stepper/types.ts",
+          "path": "components/ui/stepper/types.ts"
+        },
+        {
+          "source": "src/components/ui/stepper/step-divider.tsx",
+          "path": "components/ui/stepper/step-divider.tsx"
+        },
+        {
+          "source": "src/components/ui/stepper/step-indicator.tsx",
+          "path": "components/ui/stepper/step-indicator.tsx"
+        },
+        {
+          "source": "src/components/ui/stepper/step-label.tsx",
+          "path": "components/ui/stepper/step-label.tsx"
+        },
+        {
+          "source": "src/components/ui/stepper/stepper-rail.tsx",
+          "path": "components/ui/stepper/stepper-rail.tsx"
+        }
+      ]
+    },
+    {
+      "name": "stepper-provider",
+      "title": "Stepper Provider",
+      "description": "Step state behind a context — current index, next/back guards and a useStepper hook — plus the view that renders the rail and the active step.",
+      "registryDependencies": ["utils", "stepper"],
+      "files": [
+        {
+          "source": "src/components/stepper-provider.tsx",
+          "path": "components/stepper-provider.tsx"
+        },
+        {
+          "source": "src/components/stepper-view.tsx",
+          "path": "components/stepper-view.tsx"
+        }
+      ]
+    },
+    {
+      "name": "step-field",
+      "title": "Step Field",
+      "description": "Label, control and validation message. Layout only — it holds no form state.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["brand-theme"],
+      "files": [
+        {
+          "source": "src/components/steps/step-field.tsx",
+          "path": "components/steps/step-field.tsx"
+        }
+      ]
+    },
+    {
+      "name": "form-fields",
+      "title": "Form Fields",
+      "description": "FormInput and FormSelect bound to react-hook-form through useController, so a field's error re-renders that field alone.",
+      "dependencies": ["react-hook-form"],
+      "registryDependencies": ["input", "select", "step-field"],
+      "files": [
+        {
+          "source": "src/components/steps/form-input.tsx",
+          "path": "components/steps/form-input.tsx"
+        },
+        {
+          "source": "src/components/steps/form-select.tsx",
+          "path": "components/steps/form-select.tsx"
+        }
+      ]
+    },
+    {
+      "name": "normalize",
+      "title": "normalize",
+      "description": "Input normalisers — currently `digits`, which strips everything that is not a digit.",
+      "files": [
+        {
+          "source": "src/lib/normalize.ts",
+          "path": "lib/normalize.ts"
+        }
+      ]
+    },
+    {
+      "name": "tckn",
+      "title": "T.C. Kimlik No",
+      "description": "Validates a Turkish national identity number, check digits included — which is what stops a typo from passing as a real identity.",
+      "registryDependencies": ["normalize"],
+      "files": [
+        {
+          "source": "src/lib/tckn.ts",
+          "path": "lib/tckn.ts"
+        }
+      ]
+    },
+    {
+      "name": "quote-schema",
+      "title": "Quote Schema",
+      "description": "Zod schemas for the quote flow — TCKN, Turkish mobile number, e-mail and occupation — plus per-step field lists and form defaults.",
+      "dependencies": ["zod"],
+      "registryDependencies": ["normalize", "tckn"],
+      "files": [
+        {
+          "source": "src/lib/quote-schema.ts",
+          "path": "lib/quote-schema.ts"
+        }
+      ]
+    }
+  ]
+}
