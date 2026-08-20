@@ -1,0 +1,9 @@
+node_modules
+.next
+out
+build
+public
+package-lock.json
+
+# Generated: copied verbatim from src/, which prettier already policies.
+packages/me-ui/registry
