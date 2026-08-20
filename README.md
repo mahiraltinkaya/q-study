@@ -20,6 +20,7 @@ edebilirsiniz.
 | ----------------------- | ---------------------------------------------------------- |
 | `bun run dev`           | Geliştirme sunucusunu başlatır                             |
 | `bun run build`         | Prodüksiyon derlemesi alır                                 |
+| `bun run typecheck`     | Rota tipleri + `tsc --noEmit`                              |
 | `bun run lint`          | ESLint denetimini çalıştırır                               |
 | `bun run test`          | Vitest — uygulama ve `me-ui` CLI suite'larını çalıştırır   |
 | `bun run test:coverage` | Kapsam raporu üretir; eşiğin altına düşülmesi hata verir   |

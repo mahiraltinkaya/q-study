@@ -24,8 +24,10 @@ jobs:
       - name: Lint
         run: bun run lint
 
+      # `next typegen` first: LayoutProps and friends are generated route types,
+      # so a bare `tsc` before the build fails on a clean checkout.
       - name: Typecheck
-        run: bunx tsc --noEmit
+        run: bun run typecheck
 
       - name: Format
         run: bun run format:check

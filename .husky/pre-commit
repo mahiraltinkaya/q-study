@@ -8,8 +8,9 @@ npx lint-staged
 # 0.2s — a component edited in src/ without re-running ui:sync.
 bun run ui:check
 
-# ~5s — the breakage most likely to be sitting in a commit.
-bunx tsc --noEmit
+# ~6s — the breakage most likely to be sitting in a commit. Generates the route
+# types first so a fresh clone does not fail on Next's generated globals.
+bun run typecheck
 
 # ~6s — both suites: the app and the me-ui CLI.
 bun run test
