@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - run: bun install --frozen-lockfile
+
+      - name: Lint
+        run: bun run lint
+
+      - name: Typecheck
+        run: bunx tsc --noEmit
+
+      - name: Format
+        run: bun run format:check
+
+      # Covers both suites — the app and the me-ui CLI — and fails the build if
+      # coverage drops below the ratchet in vitest.config.mts.
+      - name: Test
+        run: bun run test:coverage
+
+      # Catches a component edited in src/ without re-running ui:sync, which
+      # would otherwise only surface at publish time.
+      - name: Registry in sync
+        run: bun run ui:check
+
+      - name: Build
+        run: bun run build
+
+      - name: Install browser
+        run: bunx playwright install --with-deps chromium
+
+      # Runs against the build above; the Playwright config skips its own build
+      # when CI is set and starts the server only.
+      - name: End-to-end
+        run: bun run test:e2e
+        env:
+          CI: "true"
+
+      - name: Upload E2E report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7

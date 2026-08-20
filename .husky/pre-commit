@@ -1,0 +1,15 @@
+# The fast half of CI, so a broken commit never reaches a branch.
+# Budget is roughly 13s; anything slower lives in pre-push, because a hook people
+# start skipping with --no-verify protects nothing.
+
+# Lints and formats only what is staged.
+npx lint-staged
+
+# 0.2s — a component edited in src/ without re-running ui:sync.
+bun run ui:check
+
+# ~5s — the breakage most likely to be sitting in a commit.
+bunx tsc --noEmit
+
+# ~6s — both suites: the app and the me-ui CLI.
+bun run test

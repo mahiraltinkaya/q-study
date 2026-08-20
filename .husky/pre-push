@@ -1,0 +1,11 @@
+# The expensive half of CI, run once per push instead of once per commit.
+# Together with pre-commit this is every CI step except the end-to-end suite,
+# which needs a browser download and belongs on the runner.
+
+# Whole tree, not just staged files — a rename can leave an unstaged file dirty.
+bun run lint
+bun run format:check
+
+# ~20s. Catches what only a production build sees: server/client boundary
+# violations, and anything the dev server is lenient about.
+bun run build
